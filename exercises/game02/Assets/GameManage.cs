@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class GameManage : MonoBehaviour
 {
@@ -15,10 +17,11 @@ public class GameManage : MonoBehaviour
 	float makeRainTimer = 0.01f;
 	float makeRainRate = 0.01f;
 
+	int numHearts = 0;
 	
 	void Start()
 	{
-		ground = GameObject.Find("Ground");
+		ground = GameObject.Find("ground");
 	}
 
 	
@@ -48,12 +51,20 @@ public class GameManage : MonoBehaviour
 
 	public void MakeMoreHearts()
 	{
-		
-		Debug.Log("Make heart");
-		
-		Vector3 pos = new Vector3(ground.transform.position.x + Random.Range(-10, 10)
-								, ground.transform.position.y + 10,
-								ground.transform.position.z + Random.Range(-10, 10));
-		Instantiate(heartPrefab, pos, Quaternion.identity);
+		numHearts++;
+
+		if (numHearts < 10)
+		{
+			Debug.Log("Make heart");
+
+			Vector3 pos = new Vector3(ground.transform.position.x + Random.Range(-10, 10)
+									, ground.transform.position.y + 10,
+									ground.transform.position.z + Random.Range(-10, 10));
+			Instantiate(heartPrefab, pos, Quaternion.identity);
+		}
+        else
+        {
+			SceneManager.LoadScene("level");
+        }
 	}
 }
